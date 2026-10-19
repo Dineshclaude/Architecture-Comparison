@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matching Architecture Simulator</title>
+<link rel="stylesheet" href="styles.css?v=3">
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">CV ↔ Job matching · Claude API cost simulator</div>
+    <h1>Matching Architecture <span class="grad">Simulator</span></h1>
+    <p class="sub">Compare five architectures side by side. Set how many CVs and jobs you process, pick a Claude model and effort for every LLM stage, and see calls, token usage, latency and cost ranges update live.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="panel controls" id="controls">
+    <div class="ctl">
+      <label for="cvsNum">CVs processed</label>
+      <div class="slider-row">
+        <input type="range" id="cvsRange" min="0" max="1000" step="1">
+        <input type="number" id="cvsNum" min="0" step="1">
+      </div>
+    </div>
+    <div class="ctl">
+      <label for="jobsNum">Jobs in the system</label>
+      <div class="slider-row">
+        <input type="range" id="jobsRange" min="0" max="1000" step="1">
+        <input type="number" id="jobsNum" min="0" step="1">
+      </div>
+    </div>
+    <div class="ctl small">
+      <label for="monthsNum">Months (fixed costs)</label>
+      <input type="number" id="monthsNum" min="0" step="1">
+    </div>
+    <div class="ctl small">
+      <label for="repeatNum">Repeat-search cache hit % <span class="hint">(Arch 1)</span></label>
+      <input type="number" id="repeatNum" min="0" max="100" step="1">
+    </div>
+    <div class="ctl small">
+      <label for="concNum">LLM calls in parallel</label>
+      <input type="number" id="concNum" min="1" step="1">
+    </div>
+    <div class="ctl wide">
+      <label>Default model &amp; effort for all LLM stages</label>
+      <div class="inline">
+        <select id="gModel"></select>
+        <select id="gEffort"></select>
+        <button class="btn" id="applyAll" type="button">Apply to all stages</button>
+      </div>
+    </div>
+  </section>
+
+  <details class="panel pricing">
+    <summary>Model pricing &amp; speed (USD per 1M tokens, tokens/sec, time-to-first-token) — editable</summary>
+    <div id="pricingTable"></div>
+    <p class="note">Defaults are Anthropic first-party list prices. Edit them if your rates differ.</p>
+  </details>
+
+  <nav class="tabs" id="tabs"></nav>
+  <div id="view"></div>
+
+  <footer class="foot">
+    Estimates only. Token counts per call are editable assumptions; ranges apply −25%/+30% to input, −25%/+35% to output and 0.5×/1.6× to thinking tokens.
+    Latency figures (model speed, time-to-first-token, local step times) are rough editable assumptions. Claude has no embeddings endpoint, so embeddings are modelled as custom (non-LLM) cost lines.
+  </footer>
+</main>
+<script src="app.js?v=3"></script>
+</body>
+</html>
